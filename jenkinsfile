@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+    
+    stages{
+        stage("code"){
+            steps{
+                echo "cloning the code"
+                git url:"https://github.com/Awaismalikhas/pythoncode.git" , branch: "main"
+            }
+            
+        }
+        stage("build"){
+            steps{
+                echo "building the code"
+                sh "docker build -t pythonapplicationhai ."
+            }
+            
+        }
+        
+        stage("deploy"){
+            steps{
+                echo "deploying the code"
+                sh "docker run -d -p 5000:5000 pythonapplicationhai"
+            }
+            
+        }
+    }
+}
+    
+    
+    
